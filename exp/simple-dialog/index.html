@@ -15,36 +15,15 @@
   <body>
     <div id="app-container">
       <main class="card" id="dialog">
-        <div id="dialog-controls">
-          <button
-            id="close-dialog"
-            type="button"
-            class="button button--variant-ghost button--size-icon"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-x"
-            >
-              <path d="M18 6 6 18" />
-              <path d="m6 6 12 12" />
-            </svg>
-          </button>
-        </div>
         <form class="form space-evenly" method="post" id="question-form">
           <h1 class="heading" id="question">Loading...</h1>
-          <div class="input-container">
-            <label class="label" for="answer">Answer</label>
-            <input class="input" type="text" id="answer" />
+          <div>
+            <div class="input-container">
+              <label class="label" for="answer">Answer</label>
+              <input class="input" type="text" id="answer" />
+            </div>
+            <button class="button" type="submit">Submit</button>
           </div>
-          <button class="button" type="submit">Submit</button>
         </form>
       </main>
     </div>
@@ -57,8 +36,6 @@
       const CORRECT_ANSWER = "1";
 
       const form = document.querySelector("#question-form");
-
-      let canCloseDialog = false;
 
       form.addEventListener("submit", (event) => {
         event.preventDefault();
@@ -82,20 +59,8 @@
         main.append(message);
 
         setTimeout(() => {
-          message.remove();
+          document.querySelector("#dialog").classList.add("hidden");
         }, 1000);
-
-        setTimeout(() => {
-          form.classList.remove("hidden");
-        }, 1050);
-
-        canCloseDialog = true;
-      });
-
-      const closeDialogButton = document.querySelector("#close-dialog");
-      closeDialogButton.addEventListener("click", () => {
-        if (!canCloseDialog) return;
-        document.querySelector("#dialog").classList.add("hidden");
       });
     </script>
   </body>
