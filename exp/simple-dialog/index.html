@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Dialog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div id="app-container">
+      <main class="card" id="dialog">
+        <div id="dialog-controls">
+          <button
+            id="close-dialog"
+            type="button"
+            class="button button--variant-ghost button--size-icon"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-x"
+            >
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
+        </div>
+        <form class="form space-evenly" method="post" id="question-form">
+          <h1 class="heading" id="question">Loading...</h1>
+          <div class="input-container">
+            <label class="label" for="answer">Answer</label>
+            <input class="input" type="text" id="answer" />
+          </div>
+          <button class="button" type="submit">Submit</button>
+        </form>
+      </main>
+    </div>
+
+    <script>
+      const QUESTION = 'Correct answer is "1", what are you going to type?';
+
+      document.querySelector("#question").innerHTML = QUESTION;
+
+      const CORRECT_ANSWER = "1";
+
+      const form = document.querySelector("#question-form");
+
+      let canCloseDialog = false;
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        form.classList.add("hidden");
+
+        const answer = document.querySelector("#answer").value;
+
+        const message = document.createElement("p");
+
+        message.classList.add("alert");
+
+        if (answer.trim() === CORRECT_ANSWER) {
+          message.innerHTML = "Pass";
+        } else {
+          message.innerHTML = "Fail";
+        }
+
+        const main = document.getElementsByTagName("main")[0];
+
+        main.append(message);
+
+        setTimeout(() => {
+          message.remove();
+        }, 1000);
+
+        setTimeout(() => {
+          form.classList.remove("hidden");
+        }, 1050);
+
+        canCloseDialog = true;
+      });
+
+      const closeDialogButton = document.querySelector("#close-dialog");
+      closeDialogButton.addEventListener("click", () => {
+        if (!canCloseDialog) return;
+        document.querySelector("#dialog").classList.add("hidden");
+      });
+    </script>
+  </body>
+</html>
